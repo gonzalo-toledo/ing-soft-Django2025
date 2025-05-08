@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Customers List{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Lista de clientes</h1>
+
+    <div class="table-responsive">
+        <table class="table table-success table-hover">
+            <thead style="text-align: center;">
+                <tr class="table-secondary">
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Número de telefono</th>
+                </tr>
+            </thead>
+
+            <tbody style="text-align: center;">
+                {%for customer in customers%}
+                <tr class="">
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.phone }}</td>
+                </tr>
+                {% empty %}
+                <tr class="">
+                    <td colspan="4">No hay clientes cargados</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>   
+{% endblock %}

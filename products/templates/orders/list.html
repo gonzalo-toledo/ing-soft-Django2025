@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Orders List{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Lista de pedidos</h1>
+    <ul>
+        {% for order in orders %}
+            <li>
+                <a href="">
+                    # {{ order.id }}
+                </a>
+                - Customer: {{ order.customer.name }}
+            </li>
+            
+
+            {% empty %}
+                <p>Empty orders</p>
+
+        {% endfor %}
+        
+{% endblock %}

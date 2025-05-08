@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="p-5 mb-4 bg-success rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">¡Bienvenido!</h1>
+            <p class="col-md-8 fs-4">
+                Soy Gonzalo Toledo y este es mi primer proyecto en Django como estudiante de Desarrollo de Software.
+            </p>
+            {% if user.is_anonymous %}
+                <a class="btn btn-dark btn-lg" href="{% url 'login' %}"> Animate y entrá a ver </a>
+            {% endif %} 
+        </div>
+    </div>
+    
+{% endblock %}
+
+
+

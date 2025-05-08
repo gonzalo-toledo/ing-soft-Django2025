@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Products List{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Listado de productos</h1>
+
+    <div class="table-responsive">
+        <table class="table table-success table-hover">
+            <thead style="text-align: center;">
+                <tr class="table-secondary">
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Details</th>
+
+                </tr>
+            </thead>
+            <tbody style="text-align: center;">
+                {%for product in products%}
+                <tr class="">
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.stock }}</td>
+                    <td>
+                        <a href="{% url 'product_detail' product.id %}">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr class="">
+                    <td colspan="4">No hay productos</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+
+    <h3>El total del valor de los productos es ${{ total_price }}</h3>
+
+{% endblock %}
