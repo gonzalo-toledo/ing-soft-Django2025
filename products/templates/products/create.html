@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Create Product{% endblock %}
+
+{% block content %}
+    
+    <div class="col-12 col-md-6 mx-auto border p-4 rounded-3" style="background-color: #d1e7dd;">
+        <h1 class="text-center">Crear producto</h1>
+        <p class="text-center fw-bold">Agrega un nuevo producto a tu inventario</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Precio</label>
+                    <input type="number" class="form-control" id="price" name="price" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="stock" class="form-label">Stock</label>
+                    <input type="number" class="form-control" id="stock" name="stock">
+                </div>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+            <a href="{% url 'product_list' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+
+    </div>
+{% endblock %}

@@ -28,6 +28,9 @@
                         <a href="{% url 'product_detail' product.id %}">
                             <i class="bi bi-eye"></i>
                         </a>
+                        <a href="{% url 'product_delete' product.id %}">
+                            <i class="bi bi-trash"></i>
+                        </a>
                     </td>
                 </tr>
                 {% empty %}
