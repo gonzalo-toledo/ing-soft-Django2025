@@ -66,7 +66,7 @@ class ProductDetail (DetailView):
 class ProductDelete(DeleteView):
     model = Product
     template_name = 'products/delete.html'
-    content_object_name = 'product'
+    context_object_name = 'product'
     pk_url_kwarg = 'product_id'
     success_url = reverse_lazy('product_list') # redirecciona a la lista de productos. 'pruduct_list' es el name de la url
     
