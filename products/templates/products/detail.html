@@ -11,5 +11,9 @@
     <p>Description: {{ product.description }}</p>
     <p>Stock: {{ product.stock }}</p>
 
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="">
+    {% endif %}
+
     <a href="{% url 'product_list' %}">Volver</a>
 {% endblock %}

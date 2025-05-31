@@ -1,23 +1,23 @@
 from django.urls import path
 
-from home.views import  home, login_view, logout_view , register 
+from home.views import  HomeView, LoginView, LogoutView ,RegisterView
 
 
 urlpatterns = [
     path(route='register/', 
-        view=register, 
+        view=RegisterView.as_view(), 
         name='register',
     ),
     path(route='login/',
-        view=login_view, 
+        view=LoginView.as_view(), 
         name='login',
     ),   
     path(route='logout/',
-        view=logout_view, 
+        view=LogoutView.as_view(), 
         name='logout',
     ),
     path(route='',
-        view=home, 
+        view=HomeView.as_view(), 
         name='index',
     ),
 ]

@@ -5,10 +5,10 @@
 {% block content %}
     
     <div class="col-12 col-md-6 mx-auto border p-4 rounded-3" style="background-color: #d1e7dd;">
-        <h1 class="text-center">Crear producto</h1>
+        <h1 class="text-center">Crear producto con View</h1>
         <p class="text-center fw-bold">Agrega un nuevo producto a tu inventario</p>
 
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="name" class="form-label">Nombre</label>
@@ -29,7 +29,6 @@
                 <button type="submit" class="btn btn-primary">Crear</button>
             </form>
             <a href="{% url 'product_list' %}" class="btn btn-secondary">Cancelar</a>
-        </form>
 
     </div>
 {% endblock %}

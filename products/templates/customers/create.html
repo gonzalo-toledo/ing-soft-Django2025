@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %} Create Cliente{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">{{ creador_cliente }}</h1>
+
+    <div class="col-12 col-md-6 mx-auto border p-4 rounded-3" style="background-color: #d1e7dd;">
+        <p class="text-center fw-bold">Crea un nuevo cliente</p>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }} <!--TODO: mejorar los imputs y el diseño -->
+            <button type="submit" class="btn btn-primary">Crear</button>
+            <a href="{% url 'customer_list' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+{% endblock %}

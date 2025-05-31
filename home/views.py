@@ -6,67 +6,80 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
+from django.views import View
+from home.forms import RegisterForm, LoginForm
 
-def home(request):
-    return render(
-        request,
-        'index.html',
-    )
-
-def register(request):
-    if request.method == 'POST':        
-        data = request.POST
-        username = data.get('username')
-        pass1 = data.get('password1')
-        pass2 = data.get('password2')
-        email = data.get('email')
-        print(username, pass1, pass2)
-        
-        if not username or not pass1 or not pass2:
-            raise "no hay data" #no seria necesario ya que el formulario tiene required
-        elif pass1 != pass2:
-            messages.error(request, "las contraseñas no son iguales")
-        
-        elif User.objects.filter(username=username).exists():
-            messages.error(request, "El usuario ya existe")
-        else:
-            User.objects.create_user(
-                username=username, 
-                email=email, 
-                password=pass1
-            )
-            print("Usuario creado")    
     
-    return render(
-        request,
-        'account/register.html',
-        {
-
-        }
-    )
-
-def login_view(request):
-    if request.method == 'POST':
-        data = request.POST
-        username = data.get('username')
-        password = data.get('password')
+class HomeView(View):
+    def get(self, request):
+        return render(
+            request,
+            'index.html',
+        )
+    
+class RegisterView(View):
+    def get (self, request):
+        form = RegisterForm()
+        return render(
+            request,
+            'account/register.html',
+            {
+                'form': form
+            }
+        )
+    def post (self, request):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            User.objects.create_user(
+                username=form.cleaned_data.get('username'), #se puede acceder asi: .get()
+                email=form.cleaned_data['email'], #o asi [], porque es un diccionario
+                password=form.cleaned_data['password1']
+            )
+            messages.success(request, "Usuario creado correctamente") 
         
-        user = authenticate(  #authtenticate verifica si el usuario existe pero no lo loguea
-            request, 
-            username=username, 
-            password=password)
-        if user is not None: #se usa None porque si no existe el usuario devuelve None
-            login(request, user) #loguea al usuario
-            return redirect('../products/product_list') #redirecciona a la vista de productos
-        else:
-            messages.error(request, "Usuario o contraseña incorrectos")
+        return render(
+            request,
+            'account/register.html',
+            {
+                'form': form
+            }
+        )        
+        
+
+
+class LoginView(View):
+    def get(self, request):
+        form = LoginForm()
+        return render(
+            request,
+            'account/login.html',
+            {
+                "form": form
+            }
+        )
+    def post (self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+
+            user = authenticate(  #authtenticate verifica si el usuario existe pero no lo loguea
+                request, 
+                username=username, 
+                password=password
+            )
             
-        
-    return render(request, "account/login.html") 
+            if user is not None: #se usa None porque si no existe el usuario devuelve None
+                login(request, user) #loguea al usuario
+                return redirect('../products/product_list') #redirecciona a la vista de productos
+            else:
+                messages.error(request, "Usuario o contraseña incorrectos")
+                
+        return render(request, 
+            "account/login.html", 
+            {"form": form}) 
 
-def logout_view(request):
-    logout(request) #desloguea al usuario
-    return redirect('index') #redirecciona a la vista de index
-
-def _validate_pass(pass1, pass2):
-    pass1 == pass2
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('index')
