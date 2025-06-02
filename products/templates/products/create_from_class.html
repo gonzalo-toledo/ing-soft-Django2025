@@ -11,7 +11,7 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }} <!--TODO: mejorar los imputs y el diseño -->
-            <button type="submit" class="btn btn-primary">Crear</button>
+            <button type="submit" class="btn btn-dark">Crear</button>
             <a href="{% url 'product_list' %}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>

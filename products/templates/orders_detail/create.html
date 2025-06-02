@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %} Orders Detail Create {% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Orden n° {{ order.id }}, cliente: {{ order.customer}}</h1>
+
+    <span>Fecha de orden: {{ order.date }}</span>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-dark"> Guardar </button>
+    </form>
+
+    <h5 class="mt-4">Detalle de orden:</h5>
+    <div class="table-responsive">
+        <table class="table table-success table-hover">
+            <thead style="text-align: center;">
+                <tr class="table-secondary">
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+
+                </tr>
+            </thead>
+            <tbody style="text-align: center;">
+                {% for detail in details %}
+                <tr>
+                    <td>{{ detail.product }}</td>
+                    <td>{{ detail.quantity }}</td>
+                    <td>{{ detail.product.price }}</td>
+                    <td>{{ detail.subtotal }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h6>Total acumulado: ${{ total }}</h6>
+
+    </div>
+{% endblock %}
+
+
+
+

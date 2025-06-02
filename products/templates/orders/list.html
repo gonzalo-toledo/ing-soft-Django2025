@@ -3,11 +3,11 @@
 {% block title %}Orders List{% endblock %}
 
 {% block content %}
-    <h1 class="text-center">Lista de pedidos</h1>
+    <h1 class="text-center">Lista de órdenes</h1>
     <ul>
         {% for order in orders %}
             <li>
-                <a href="">
+                <a href="{% url 'order_detail' order.id %}">
                     # {{ order.id }}
                 </a>
                 - Customer: {{ order.customer.name }}

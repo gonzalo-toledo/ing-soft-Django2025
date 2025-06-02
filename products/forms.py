@@ -1,7 +1,9 @@
 from django import forms
 
-from products.models import Customer, Product 
+from products.models import Customer, Product, Order, OrderDetail
 
+
+# PRODUCTOS:
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
@@ -33,6 +35,8 @@ class ProductForm(forms.ModelForm):
             ),
         }
         
+        
+# CLIENTES:        
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
@@ -51,6 +55,38 @@ class CustomerForm(forms.ModelForm):
                 }
             ),
             'phone': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+        }
+        
+        
+# ORDENES:        
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['customer']
+        widgets = {
+            'customer': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+        }
+        
+class OrderDetailForm(forms.ModelForm):
+    class Meta:
+        model = OrderDetail
+        fields = ['order', 'product', 'quantity']
+        widgets = {
+            'order': forms.HiddenInput(),
+            'product': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'quantity': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
                 }

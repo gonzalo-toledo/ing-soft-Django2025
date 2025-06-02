@@ -29,13 +29,16 @@ class Order(models.Model):
         on_delete=models.CASCADE,
         )
     date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"Orden n° {self.id} del cliente: {self.customer.name}"
 
 
 class OrderDetail(models.Model):
     order = models.ForeignKey(
         Order, 
         on_delete=models.CASCADE,
-        related_name="details", 
+        related_name="details", #para acceder a los detalles de la orden
         )
     product = models.ForeignKey(
         Product, 
