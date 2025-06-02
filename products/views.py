@@ -9,7 +9,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView
 
 
 from products.forms import  CustomerForm, OrderDetailForm, OrderForm, ProductForm
-from products.models import Customer, Order, Product, OrderDetail
+from products.models import Customer, Order, Product
 
 # Create your views here. 
 
