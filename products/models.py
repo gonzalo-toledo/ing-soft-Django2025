@@ -1,4 +1,5 @@
 from django.db import models
+from simple_history.models import HistoricalRecords
 
 # Create your models here.
 class Product(models.Model):
@@ -45,6 +46,33 @@ class OrderDetail(models.Model):
         on_delete=models.CASCADE,
         )
     quantity = models.IntegerField()
+    history = HistoricalRecords()
     
     def __str__(self):
-        return f"{self.quantity} x {self.product}"
+        # return f"{self.quantity} x {self.product}"
+        return str(self.pk)
+    
+
+class OrderDetailAuditLog(models.Model):
+    """
+    Modelo para registrar los cambios de OrderDetail
+    """
+    order_detail = models.ForeignKey(
+        OrderDetail, 
+        on_delete=models.CASCADE,
+        related_name = "details"
+        )
+    actions = models.CharField(
+        max_length=100,
+        choices=[
+            ('created', 'Creado'),
+            ('updated', 'Actualizado'),
+        ]
+        )
+    quantity = models.IntegerField()
+    product_name = models.CharField(
+        max_length=255
+        )
+    timestamp = models.DateTimeField(
+        auto_now_add=True
+        )

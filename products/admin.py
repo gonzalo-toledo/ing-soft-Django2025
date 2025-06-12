@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from products.models import Customer, Order, OrderDetail, Product
+from products.models import Customer, Order, OrderDetail, Product, OrderDetailAuditLog
 
 
 @admin.register(Product)
@@ -26,3 +26,7 @@ class OrderAdmin(admin.ModelAdmin):
 class OrderDetailAdmin(admin.ModelAdmin):
     list_display = ('id', 'order', 'product', 'quantity')
     
+@admin.register(OrderDetailAuditLog)
+class OrderDetailAuditLogAdmin(admin.ModelAdmin):
+    list_display = ['order_detail', 'actions', 'quantity', 'product_name', 'timestamp']
+    readonly_fields = list_display
