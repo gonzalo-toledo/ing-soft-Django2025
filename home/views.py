@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
-
 # Create your views here.
 
+
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
+from django.core.mail import EmailMessage
 from django.views import View
 from home.forms import RegisterForm, LoginForm
 
@@ -30,13 +32,33 @@ class RegisterView(View):
     def post (self, request):
         form = RegisterForm(request.POST)
         if form.is_valid():
-            User.objects.create_user(
+            user = User.objects.create_user(
                 username=form.cleaned_data.get('username'), #se puede acceder asi: .get()
                 email=form.cleaned_data['email'], #o asi [], porque es un diccionario
                 password=form.cleaned_data['password1']
             )
-            messages.success(request, "Usuario creado correctamente") 
         
+            #envio de correo
+            subject = "registro exitoso"
+            message = render_to_string(
+                'mails/welcome.html',
+                {
+                    'email': user.email
+                }
+            )
+            email = EmailMessage(
+                subject=subject,
+                body=message,
+                from_email=settings.EMAIL_HOST_USER,
+                to=[User.email]
+            )
+            email.content_subtype = "html" #para que lo inteprete como html
+            email.send(
+                fail_silently=False #si fallo no se manda
+            )
+            
+            messages.success(request, "Usuario creado correctamente")
+            
         return render(
             request,
             'account/register.html',
